@@ -1,7 +1,7 @@
-package com.github.mrpowers.spark.examples
+package com.github.mrpowers.spark.examples.basic
 
-import org.scalatest._
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
+import org.scalatest._
 
 class ConverterSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 

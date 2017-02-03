@@ -1,9 +1,9 @@
-package com.github.mrpowers.spark.examples
+package com.github.mrpowers.spark.examples.basic
 
-import org.scalatest._
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.scalatest._
 
 class HelloWorldSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 

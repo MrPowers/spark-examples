@@ -1,4 +1,4 @@
-package com.github.mrpowers.spark.examples
+package com.github.mrpowers.spark.examples.basic
 
 import org.apache.spark.sql.functions._
 
