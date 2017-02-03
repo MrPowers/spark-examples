@@ -1,5 +1,5 @@
-# spark-transformer
+# spark-examples
 
-Standard transformation library in Spark.
+A series of examples that demonstrate key Spark concepts.
 
-It will include transformations to parse dates and add columns like `age` to Dataframes.
+I'll try to back up the super interesting examples with great blog posts!
