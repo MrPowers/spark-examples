@@ -129,7 +129,24 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
         ("nacional", "soccer")
       ).toDF("team", "sport")
 
-      sourceDf.columns should equal(Array("team", "sport"))
+      val expected = Array("team", "sport")
+
+      sourceDf.columns should equal(expected)
+
+    }
+
+  }
+
+  describe("#count") {
+
+    it("returns a count of all the rows in a DataFrame") {
+
+      val sourceDf = Seq(
+        ("jets"),
+        ("barcelona")
+      ).toDF("team")
+
+      sourceDf.count should equal(2)
 
     }
 
