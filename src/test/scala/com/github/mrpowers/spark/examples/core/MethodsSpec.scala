@@ -18,6 +18,7 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
       // classTag - not sure what this is for, maybe Java?
       // coalesce - not well suited for test file
       // col - shown as part of other examples
+      // collectAsList - seems like a Java thing
 
     }
 
@@ -119,6 +120,19 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   }
 
+  describe("#columns") {
 
+    it("returns all the column names as an array") {
+
+      val sourceDf = Seq(
+        ("jets", "football"),
+        ("nacional", "soccer")
+      ).toDF("team", "sport")
+
+      sourceDf.columns should equal(Array("team", "sport"))
+
+    }
+
+  }
 
 }
