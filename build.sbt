@@ -1,12 +1,12 @@
-name := "spark-transformer"
+name := "spark-examples"
 
-spName := "mrpowers/spark-transformer"
+spName := "mrpowers/spark-examples"
 
-spShortDescription := "Standard Spark transformations"
+spShortDescription := "Spark examples"
 
-spDescription := "DataFrame transformation and user defined function library"
+spDescription := "Demonstrate how Spark works with tests!"
 
-version := "0.0.2"
+version := "0.0.1"
 
 scalaVersion := "2.11.7"
 sparkVersion := "2.1.0"
