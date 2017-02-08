@@ -19,7 +19,9 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
       // coalesce - not well suited for test file
       // col - shown as part of other examples
       // collectAsList - seems like a Java thing
-
+      // createGlobalTempView
+      // createOrReplaceTempView
+      // createTempView
     }
 
   }
@@ -147,6 +149,35 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
       ).toDF("team")
 
       sourceDf.count should equal(2)
+
+    }
+
+  }
+
+  describe("#crossJoin") {
+
+    it("returns a count of all the rows in a DataFrame") {
+
+      val letterDf = Seq(
+        ("a"),
+        ("b")
+      ).toDF("letter")
+
+      val numberDf = Seq(
+        ("1"),
+        ("2")
+      ).toDF("number")
+
+      val actualDf = letterDf.crossJoin(numberDf)
+
+      val expectedDf = Seq(
+        ("a", "1"),
+        ("a", "2"),
+        ("b", "1"),
+        ("b", "2")
+      ).toDF("letter", "number")
+
+      assertDataFrameEquals(actualDf, expectedDf)
 
     }
 
