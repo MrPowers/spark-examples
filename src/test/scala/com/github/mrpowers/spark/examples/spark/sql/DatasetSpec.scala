@@ -1,4 +1,4 @@
-package com.github.mrpowers.spark.examples.core
+package com.github.mrpowers.spark.examples.spark.sql
 
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.scalatest._
@@ -6,7 +6,7 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
-class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
+class DatasetSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   import spark.implicits._
 
@@ -218,6 +218,8 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
       val actualDf = letterDf.describe()
 
+      actualDf.show()
+
       val expectedDf = Seq(
         ("count", "2"),
         ("mean", null),
@@ -390,7 +392,5 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
     }
 
   }
-
-
 
 }
