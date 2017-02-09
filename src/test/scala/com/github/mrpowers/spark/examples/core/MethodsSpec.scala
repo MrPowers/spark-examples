@@ -4,7 +4,7 @@ import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.scalatest._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.Row
-import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
 class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
@@ -22,6 +22,7 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
       // createGlobalTempView
       // createOrReplaceTempView
       // createTempView
+      // cube
     }
 
   }
@@ -176,6 +177,65 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
         ("b", "1"),
         ("b", "2")
       ).toDF("letter", "number")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+  describe("#dropDuplicates") {
+
+    it("drops the duplicate rows from a DataFrame") {
+
+      val numbersDf = Seq(
+        (1, 2),
+        (8, 8),
+        (1, 2),
+        (5, 6),
+        (8, 8)
+      ).toDF("num1", "num2")
+
+      val actualDf = numbersDf.dropDuplicates()
+
+      val expectedDf = Seq(
+        (1, 2),
+        (5, 6),
+        (8, 8)
+      ).toDF("num1", "num2")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+    it("drops duplicate rows based on certain columns") {
+
+      val numbersDf = Seq(
+        (1, 2, 100),
+        (8, 8, 100),
+        (1, 2, 200),
+        (5, 6, 7),
+        (8, 8, 50)
+      ).toDF("num1", "num2", "num3")
+
+      val actualDf = numbersDf.dropDuplicates("num1", "num2")
+
+      val sourceData = List(
+        Row(1, 2, 100),
+        Row(5, 6, 7),
+        Row(8, 8, 100)
+      )
+
+      val sourceSchema = List(
+        StructField("num1", IntegerType, false),
+        StructField("num2", IntegerType, false),
+        StructField("num3", IntegerType, true)
+      )
+
+      val expectedDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(sourceData),
+        StructType(sourceSchema)
+      )
 
       assertDataFrameEquals(actualDf, expectedDf)
 
