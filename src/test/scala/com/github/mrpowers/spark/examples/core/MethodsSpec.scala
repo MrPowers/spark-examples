@@ -22,7 +22,8 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
       // createGlobalTempView
       // createOrReplaceTempView
       // createTempView
-      // cube
+      // cube - http://stackoverflow.com/questions/37975227/what-is-the-difference-between-cube-and-groupby-for-operating-on-dataframes
+
     }
 
   }
@@ -177,6 +178,58 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
         ("b", "1"),
         ("b", "2")
       ).toDF("letter", "number")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+  describe("#describe") {
+
+    it("provides analytic statistics") {
+
+      val numbersDf = Seq(
+        (1),
+        (8),
+        (5)
+      ).toDF("num1")
+
+      val actualDf = numbersDf.describe()
+
+      val expectedDf = Seq(
+        ("count", "3"),
+        ("mean", "4.666666666666667"),
+        ("stddev", "3.5118845842842465"),
+        ("min", "1"),
+        ("max", "8")
+      ).toDF("summary", "num1")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+  describe("#distinct") {
+
+    it("returns the unique rows in a DataFrame") {
+
+      val numbersDf = Seq(
+        (1, 2),
+        (8, 8),
+        (1, 2),
+        (5, 6),
+        (8, 8)
+      ).toDF("num1", "num2")
+
+      val actualDf = numbersDf.distinct()
+
+      val expectedDf = Seq(
+        (1, 2),
+        (5, 6),
+        (8, 8)
+      ).toDF("num1", "num2")
 
       assertDataFrameEquals(actualDf, expectedDf)
 
