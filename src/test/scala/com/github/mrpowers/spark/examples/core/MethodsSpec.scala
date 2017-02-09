@@ -237,6 +237,30 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   }
 
+  describe("drop") {
+
+    it("drops a column from a DataFrame") {
+
+      val peopleDf = Seq(
+        ("larry", true),
+        ("jeff", false),
+        ("susy", false)
+      ).toDF("person", "wearGlasses")
+
+      val actualDf = peopleDf.drop("wearGlasses")
+
+      val expectedDf = Seq(
+        ("larry"),
+        ("jeff"),
+        ("susy")
+      ).toDF("person")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
   describe("#dropDuplicates") {
 
     it("drops the duplicate rows from a DataFrame") {
