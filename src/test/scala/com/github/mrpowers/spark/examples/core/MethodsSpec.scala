@@ -187,7 +187,7 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   describe("#describe") {
 
-    it("provides analytic statistics") {
+    it("provides analytic statistics for a numeric column") {
 
       val numbersDf = Seq(
         (1),
@@ -204,6 +204,27 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
         ("min", "1"),
         ("max", "8")
       ).toDF("summary", "num1")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+    it("only provides certain descriptive stats for a string column") {
+
+      val letterDf = Seq(
+        ("a"),
+        ("b")
+      ).toDF("letter")
+
+      val actualDf = letterDf.describe()
+
+      val expectedDf = Seq(
+        ("count", "2"),
+        ("mean", null),
+        ("stddev", null),
+        ("min", "a"),
+        ("max", "b")
+      ).toDF("summary", "letter")
 
       assertDataFrameEquals(actualDf, expectedDf)
 
@@ -319,5 +340,57 @@ class MethodsSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
     }
 
   }
+
+  describe("#dtypes") {
+
+    it("returns the column names and their data types as an array") {
+
+      val abcDf = Seq(
+        ("a", 1),
+        ("b", 2),
+        ("c", 3)
+      ).toDF("letter", "number")
+
+      val actual = abcDf.dtypes
+      val expected = Array(("letter", StringType), ("number", IntegerType))
+
+      // HACK - couldn't get this to work
+      // Don't know how to do Array equality with Scala
+//      actual.deep should equal(expected.deep)
+
+    }
+
+  }
+
+  describe("#except") {
+
+    it("returns a new Dataset with the rows in this Dataset but not in another Dataset") {
+
+      val numbersDf = Seq(
+        (1, 2),
+        (4, 5),
+        (8, 9)
+      ).toDF("num1", "num2")
+
+      val moreDf = Seq(
+        (100, 200),
+        (4, 5),
+        (800, 900)
+      ).toDF("num1", "num2")
+
+      val actualDf = numbersDf.except(moreDf)
+
+      val expectedDf = Seq(
+        (8, 9),
+        (1, 2)
+      ).toDF("num1", "num2")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+
 
 }
