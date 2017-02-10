@@ -392,4 +392,28 @@ class DatasetSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   }
 
+  describe("#filter") {
+
+    it("filters rows based on a given condition") {
+
+      val numbersDf = Seq(
+        (1),
+        (4),
+        (8),
+        (42)
+      ).toDF("num1")
+
+      val actualDf = numbersDf.filter(col("num1") > 5)
+
+      val expectedDf = Seq(
+        (8),
+        (42)
+      ).toDF("num1")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
 }
