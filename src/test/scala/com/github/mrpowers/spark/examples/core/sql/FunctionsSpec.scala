@@ -1,4 +1,4 @@
-package com.github.mrpowers.spark.examples.spark.sql
+package com.github.mrpowers.spark.examples.core.sql
 
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.scalatest._

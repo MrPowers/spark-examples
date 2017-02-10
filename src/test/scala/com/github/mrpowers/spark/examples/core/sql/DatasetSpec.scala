@@ -1,4 +1,4 @@
-package com.github.mrpowers.spark.examples.spark.sql
+package com.github.mrpowers.spark.examples.core.sql
 
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.scalatest._
@@ -218,8 +218,6 @@ class DatasetSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
       val actualDf = letterDf.describe()
 
-      actualDf.show()
-
       val expectedDf = Seq(
         ("count", "2"),
         ("mean", null),
@@ -358,7 +356,8 @@ class DatasetSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
       // HACK - couldn't get this to work
       // Don't know how to do Array equality with Scala
-//      actual.deep should equal(expected.deep)
+
+      // actual.deep should equal(expected.deep)
 
     }
 
