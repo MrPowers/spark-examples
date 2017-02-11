@@ -8,18 +8,69 @@ import org.scalatest._
 
 class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
-  describe(".isEven") {
+  describe(".isEvenSimple") {
 
     it("returns true for even numbers") {
-      NumberFun.isEven(4) should equal(true)
+
+      val sourceSchema = List(
+        StructField("number", IntegerType, true)
+      )
+
+      val sourceData = List(
+        Row(1),
+        Row(8),
+        Row(12),
+        Row(null)
+      )
+
+      val sourceDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(sourceData),
+        StructType(sourceSchema)
+      )
+
+      val actualDf = sourceDf.withColumn(
+        "is_even",
+        when(
+          col("number").isNotNull,
+          NumberFun.isEvenSimpleUdf(col("number"))
+        ).otherwise(lit(null))
+      )
+
+      val expectedSchema = List(
+        StructField("number", IntegerType, true),
+        StructField("is_even", BooleanType, true)
+      )
+
+      val expectedData = List(
+        Row(1, false),
+        Row(8, true),
+        Row(12, true),
+        Row(null, null)
+      )
+
+      val expectedDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(expectedData),
+        StructType(expectedSchema)
+      )
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+  describe(".isEvenBad") {
+
+    it("returns true for even numbers") {
+      NumberFun.isEvenBad(4) should equal(true)
     }
 
     it("returns false for odd numbers") {
-      NumberFun.isEven(3) should equal(false)
+      NumberFun.isEvenBad(3) should equal(false)
     }
 
     it("returns false for null values") {
-      NumberFun.isEven(null) should equal(false)
+      NumberFun.isEvenBad(null) should equal(false)
     }
 
     it("appends an is_even column to a Dataframe") {
@@ -40,7 +91,10 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
         StructType(sourceSchema)
       )
 
-      val actualDf = sourceDf.withColumn("is_even", NumberFun.isEvenUdf(col("number")))
+      val actualDf = sourceDf.withColumn(
+        "is_even",
+        NumberFun.isEvenBadUdf(col("number"))
+      )
 
       val expectedSchema = List(
         StructField("number", IntegerType, true),
@@ -65,6 +119,54 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
 
   }
 
+  describe(".isEvenBetter") {
+
+    it("appends an is_even column to a Dataframe") {
+
+      val sourceSchema = List(
+        StructField("number", IntegerType, true)
+      )
+
+      val sourceData = List(
+        Row(1),
+        Row(8),
+        Row(12),
+        Row(null)
+      )
+
+      val sourceDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(sourceData),
+        StructType(sourceSchema)
+      )
+
+      val actualDf = sourceDf.withColumn(
+        "is_even",
+        NumberFun.isEvenBetterUdf(col("number"))
+      )
+
+      val expectedSchema = List(
+        StructField("number", IntegerType, true),
+        StructField("is_even", BooleanType, true)
+      )
+
+      val expectedData = List(
+        Row(1, false),
+        Row(8, true),
+        Row(12, true),
+        Row(null, null)
+      )
+
+      val expectedDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(expectedData),
+        StructType(expectedSchema)
+      )
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
   describe(".isEvenOption") {
 
     it("returns true for even numbers") {
@@ -76,7 +178,7 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
     }
 
     it("returns false for null values") {
-      NumberFun.isEvenOption(null) should equal(Some(false))
+      NumberFun.isEvenOption(null) should equal(None)
     }
 
     it("appends an is_even column to a Dataframe") {
@@ -108,7 +210,55 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
         Row(1, false),
         Row(8, true),
         Row(12, true),
-        Row(null, false)
+        Row(null, null)
+      )
+
+      val expectedDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(expectedData),
+        StructType(expectedSchema)
+      )
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+  }
+
+  describe(".isEvenBroke") {
+
+    it("appends an is_even column to a Dataframe") {
+
+      val sourceSchema = List(
+        StructField("number", IntegerType, true)
+      )
+
+      val sourceData = List(
+        Row(1),
+        Row(8),
+        Row(12),
+        Row(null)
+      )
+
+      val sourceDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(sourceData),
+        StructType(sourceSchema)
+      )
+
+      val actualDf = sourceDf.withColumn(
+        "is_even",
+        NumberFun.isEvenBrokeUdf(col("number"))
+      )
+
+      val expectedSchema = List(
+        StructField("number", IntegerType, true),
+        StructField("is_even", BooleanType, true)
+      )
+
+      val expectedData = List(
+        Row(1, false),
+        Row(8, true),
+        Row(12, true),
+        Row(null, null)
       )
 
       val expectedDf = spark.createDataFrame(
