@@ -437,4 +437,31 @@ class DatasetSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
 
   }
 
+  describe("#first") {
+
+    it("returns the first row of a DataFrame") {
+
+      val row1 = Row("doug")
+      val row2 = Row("patty")
+
+      val sourceData = List(
+        row1,
+        row2
+      )
+
+      val sourceSchema = List(
+        StructField("character", StringType, true)
+      )
+
+      val sourceDf = spark.createDataFrame(
+        spark.sparkContext.parallelize(sourceData),
+        StructType(sourceSchema)
+      )
+
+      sourceDf.first() should equal(row1)
+
+    }
+
+  }
+
 }
