@@ -224,53 +224,5 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
 
   }
 
-  describe(".isEvenBroke") {
-
-    it("appends an is_even column to a Dataframe") {
-
-      val sourceSchema = List(
-        StructField("number", IntegerType, true)
-      )
-
-      val sourceData = List(
-        Row(1),
-        Row(8),
-        Row(12),
-        Row(null)
-      )
-
-      val sourceDf = spark.createDataFrame(
-        spark.sparkContext.parallelize(sourceData),
-        StructType(sourceSchema)
-      )
-
-      val actualDf = sourceDf.withColumn(
-        "is_even",
-        NumberFun.isEvenBrokeUdf(col("number"))
-      )
-
-      val expectedSchema = List(
-        StructField("number", IntegerType, true),
-        StructField("is_even", BooleanType, true)
-      )
-
-      val expectedData = List(
-        Row(1, false),
-        Row(8, true),
-        Row(12, true),
-        Row(null, null)
-      )
-
-      val expectedDf = spark.createDataFrame(
-        spark.sparkContext.parallelize(expectedData),
-        StructType(expectedSchema)
-      )
-
-      assertDataFrameEquals(actualDf, expectedDf)
-
-    }
-
-  }
-
 }
 
