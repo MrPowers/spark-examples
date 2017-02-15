@@ -9,4 +9,8 @@ package object functions {
     datediff(end, start) / 365
   }
 
+  def between(c: Column, min: Any, max: Any): Column = {
+    c.geq(min) && c.leq(max)
+  }
+
 }

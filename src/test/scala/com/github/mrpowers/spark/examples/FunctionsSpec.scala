@@ -10,7 +10,7 @@ class FunctionsSpec extends FunSpec with DataFrameSuiteBase {
 
   import spark.implicits._
 
-  describe("yeardiff") {
+  describe("#yeardiff") {
 
     it("calculates the years between two dates") {
 
@@ -42,6 +42,56 @@ class FunctionsSpec extends FunSpec with DataFrameSuiteBase {
       )
 
       assertDataFrameApproximateEquals(actualDf.select("num_years"), expectedDf, 0.1)
+
+    }
+
+  }
+
+  describe("#between") {
+
+    it("calculates the values between two criteria") {
+
+      val sourceDf = Seq(
+        (1),
+        (5),
+        (8),
+        (15),
+        (39),
+        (55)
+      ).toDF("number")
+
+      val actualDf = sourceDf.where(functions.between(col("number"), 8, 39))
+
+      val expectedDf = Seq(
+        (8),
+        (15),
+        (39)
+      ).toDF("number")
+
+      assertDataFrameEquals(actualDf, expectedDf)
+
+    }
+
+    it("works for dates") {
+
+      val sourceDf = Seq(
+        ("1980-09-10"),
+        ("1990-04-18"),
+        ("2000-04-18"),
+        ("2010-04-18"),
+        ("2016-01-10")
+      ).toDF("some_date")
+        .withColumn("some_date", $"some_date".cast("timestamp"))
+
+      val actualDf = sourceDf.where(functions.between(col("some_date"), "1999-04-18", "2011-04-18"))
+
+      val expectedDf = Seq(
+        ("2000-04-18"),
+        ("2010-04-18")
+      ).toDF("some_date")
+        .withColumn("some_date", $"some_date".cast("timestamp"))
+
+      assertDataFrameEquals(actualDf, expectedDf)
 
     }
 
