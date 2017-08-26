@@ -5,7 +5,9 @@ import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.scalatest._
 
-class HelloWorldSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
+class HelloWorldSpec
+    extends FunSpec
+    with DataFrameSuiteBase {
 
   import spark.implicits._
 

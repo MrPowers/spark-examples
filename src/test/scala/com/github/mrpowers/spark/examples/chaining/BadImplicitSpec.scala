@@ -6,7 +6,9 @@ import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.scalatest._
 import BadImplicit._
 
-class BadImplicitSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
+class BadImplicitSpec
+    extends FunSpec
+    with DataFrameSuiteBase {
 
   import spark.implicits._
 

@@ -6,7 +6,9 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{BooleanType, IntegerType, StructField, StructType}
 import org.scalatest._
 
-class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase {
+class NumberFunSpec
+    extends FunSpec
+    with DataFrameSuiteBase {
 
   describe(".isEvenSimple") {
 
@@ -62,15 +64,15 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
   describe(".isEvenBad") {
 
     it("returns true for even numbers") {
-      NumberFun.isEvenBad(4) should equal(true)
+      assert(NumberFun.isEvenBad(4) === true)
     }
 
     it("returns false for odd numbers") {
-      NumberFun.isEvenBad(3) should equal(false)
+      assert(NumberFun.isEvenBad(3) === false)
     }
 
     it("returns false for null values") {
-      NumberFun.isEvenBad(null) should equal(false)
+      assert(NumberFun.isEvenBad(null) === false)
     }
 
     it("appends an is_even column to a Dataframe") {
@@ -170,15 +172,15 @@ class NumberFunSpec extends FunSpec with ShouldMatchers with DataFrameSuiteBase 
   describe(".isEvenOption") {
 
     it("returns true for even numbers") {
-      NumberFun.isEvenOption(4) should equal(Some(true))
+      assert(NumberFun.isEvenOption(4) === Some(true))
     }
 
     it("returns false for odd numbers") {
-      NumberFun.isEvenOption(3) should equal(Some(false))
+      assert(NumberFun.isEvenOption(3) === Some(false))
     }
 
     it("returns false for null values") {
-      NumberFun.isEvenOption(null) should equal(None)
+      assert(NumberFun.isEvenOption(null) === None)
     }
 
     it("appends an is_even column to a Dataframe") {
