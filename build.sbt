@@ -14,6 +14,8 @@ sparkVersion := "2.2.0"
 sparkComponents ++= Seq("sql","hive")
 
 spDependencies += "mrpowers/spark-daria:0.9.0"
+libraryDependencies += "org.apache.commons" % "commons-text" % "1.1"
+libraryDependencies += "MrPowers" % "spark-stringmetric" % "2.2.0_0.1.0"
 
 libraryDependencies ++= Seq(
   "com.holdenkarau" % "spark-testing-base_2.11" % "2.2.0_0.7.4"
