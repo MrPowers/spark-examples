@@ -6,7 +6,9 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.scalatest.FunSpec
 
-class PeopleProcessorSpec extends FunSpec with DataFrameSuiteBase {
+class PeopleProcessorSpec
+    extends FunSpec
+    with DataFrameSuiteBase {
 
   import spark.implicits._
 
