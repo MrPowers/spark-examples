@@ -1,3 +1,5 @@
+resolvers += "jitpack" at "https://jitpack.io"
+
 name := "spark-examples"
 
 spName := "mrpowers/spark-examples"
@@ -13,7 +15,8 @@ sparkVersion := "2.2.0"
 
 sparkComponents ++= Seq("sql","hive")
 
-spDependencies += "mrpowers/spark-daria:0.9.0"
+//spDependencies += "mrpowers/~-daria:2.2.0_0.16.0"
+libraryDependencies += "com.github.MrPowers" % "spark-daria" % "v2.2.0_0.16.0"
 libraryDependencies += "org.apache.commons" % "commons-text" % "1.1"
 libraryDependencies += "MrPowers" % "spark-stringmetric" % "2.2.0_0.1.0"
 
@@ -31,4 +34,5 @@ licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 credentials += Credentials(Path.userHome / ".ivy2" / ".sbtcredentials")
 
 fork in Test := true
+envVars in Test := Map("PROJECT_ENV" -> "test")
 javaOptions ++= Seq("-Xms512M", "-Xmx2048M", "-Xss2M","-XX:+CMSClassUnloadingEnabled")
