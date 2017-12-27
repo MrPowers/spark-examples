@@ -18,7 +18,7 @@ class HelloWorldSpec
       ("luisa")
     ).toDF("name")
 
-    val actualDf = HelloWorld.withGreeting(sourceDf)
+    val actualDf = HelloWorld.withGreeting()(sourceDf)
 
     val expectedSchema = List(
       StructField("name", StringType, true),
