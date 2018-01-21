@@ -1,11 +1,11 @@
 package com.github.mrpowers.spark.examples
 
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
-import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.StringType
 import org.scalatest.FunSpec
 import com.github.mrpowers.spark.daria.sql.SparkSessionExt._
 import org.apache.spark.sql.Column
+import org.apache.spark.sql.functions._
 
 object Whatever {
 
