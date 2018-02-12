@@ -4,7 +4,8 @@ object Config {
 
   val test: Map[String, String] = {
     Map(
-      "stateMappingsPath" -> new java.io.File(s"./src/test/resources/state_mappings.csv").getCanonicalPath
+      "stateMappingsPath" -> new java.io.File(s"./src/test/resources/state_mappings.csv").getCanonicalPath,
+      "weirdMatchesPath" -> new java.io.File(s"./src/test/resources/random_matches.csv").getCanonicalPath
     )
   }
 
