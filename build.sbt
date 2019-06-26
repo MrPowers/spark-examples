@@ -1,4 +1,5 @@
 resolvers += "jitpack" at "https://jitpack.io"
+resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
 
 name := "spark-examples"
 
@@ -11,12 +12,11 @@ spDescription := "Demonstrate how Spark works with tests!"
 version := "0.0.1"
 
 scalaVersion := "2.11.12"
-sparkVersion := "2.2.0"
+sparkVersion := "2.4.0"
 
 sparkComponents ++= Seq("sql","hive")
 
-//spDependencies += "mrpowers/~-daria:2.2.0_0.16.0"
-libraryDependencies += "com.github.MrPowers" % "spark-daria" % "v2.2.0_0.17.1"
+libraryDependencies += "mrpowers" % "spark-daria" % "2.3.0_0.24.0"
 libraryDependencies += "org.apache.commons" % "commons-text" % "1.1"
 libraryDependencies += "MrPowers" % "spark-stringmetric" % "2.2.0_0.1.0"
 
